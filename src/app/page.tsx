@@ -66,7 +66,7 @@ export default function Home() {
           className="z-0"
         >
           <SwiperSlide>
-            <div className="bg-zoom h-screen bg-no-repeat bg-cover bg-center transition duration-300 delay-300 ease-in-out" style={{ backgroundImage: "url('/asset/gedung.jpg')" }}>
+            <div className="bg-zoom h-screen bg-no-repeat bg-sm-cover bg-contain bg-center transition duration-300 delay-300 ease-in-out" style={{ backgroundImage: "url('/asset/gedung.jpg')" }}>
               <div className="bg-[#2b2a2a75] h-screen grid place-content-center ">
                 <div className="grid w-full text-center ">
                   <h1 className="text-5xl text-white">PENERIMAAN SISWA BARU</h1>
@@ -89,7 +89,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className=" bg-zoom h-screen bg-no-repeat bg-cover bg-center bg-" style={{ backgroundImage: "url('/asset/potbar.jpg')" }}>
+            <div className=" bg-zoom h-screen bg-no-repeat bg-sm-cover bg-center bg-" style={{ backgroundImage: "url('/asset/potbar.jpg')" }}>
               <div className="bg-[#2b2a2a75] h-screen grid place-content-center ">
                 <div className="grid w-full text-center ">
                   <h1 className="text-5xl text-white">PENERIMAAN SISWA BARU</h1>
@@ -98,10 +98,13 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center mt-4">
                   <button className="me-3 bg-green-500 py-2 px-4 rounded-md text-white font-semibold shadow-md">
-                    Daftar
+                    <a href="https://wa.link/yo3kjz">
+                      Daftar</a>
                   </button>
                   <button className="bg-green-700 py-2 px-4 rounded-md text-white font-semibold shadow-md">
-                    Hubungi kami
+                    <a href="https://wa.link/yo3kjz">
+                      Hubungi kami
+                    </a>
                   </button>
                 </div>
               </div>
@@ -112,7 +115,7 @@ export default function Home() {
 
       {/* visi misi */}
       <div className=" mt-20">
-        <div className="md:my-[5em] md:grid md:grid-cols-12" style={{ backgroundImage: "url('/asset/bg.jpg')" }}>
+        <div className="px-[1em] md:my-[5em] md:grid md:grid-cols-12" style={{ backgroundImage: "url('/asset/bg.jpg')" }}>
           <div className="md:col-span-7 mt-36">
             <Swiper
               effect={'coverflow'}
@@ -188,7 +191,7 @@ export default function Home() {
       </div>
 
       {/* kegiatan */}
-      <div className="min-h-screen md:px-[5em] shadow-md md:grid md:grid-cols-2 w-full justify-items-center">
+      <div className="min-h-screen px-[1em] md:px-[5em] shadow-md md:grid md:grid-cols-2 w-full justify-items-center">
         <div>
           <div className="mb-7">
             <h1 className="text-4xl mb-4 font-semibold text-green-800">
@@ -217,7 +220,7 @@ export default function Home() {
             {
               kitab.map((item: any) => (
                 <div className="mb-4">
-                  <Disclosure>
+                  <Disclosure defaultOpen={true}>
                     {({ open }) => (
                       <>
                         <Disclosure.Button className="flex items-center w-full justify-between rounded-lg bg-[#807c4994] px-4 py-2 text-left text-lg font-medium text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
