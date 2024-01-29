@@ -7,56 +7,55 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { kegiatan, kitab, unggulan } from "../../data/list"
 import "./style.css";
 import { Disclosure, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { InstagramEmbed } from 'react-social-media-embed';
+import { Document, Page, pdfjs } from "react-pdf";
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.js',
+    import.meta.url,
+).toString();
 
 export default function Home() {
+    const [numPages, setNumPages] = useState<number>();
+    const [pageNumber, setPageNumber] = useState<number>(1);
+
+    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+        setNumPages(numPages);
+    }
     return (
         <div >
             {/* navbar */}
-            <nav className="">
-                <div className="navbar bg-green-400 px-[5em]">
-                    <div className="navbar-start">
+            <nav className="z-50 w-full">
+                <div className="navbar bg-green-400 w-full">
+                    <div className="navbar-start px-7 flex justify-between w-full">
+                        <img alt="logo" src="/asset/logo.png" width={60} />
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                             </div>
-                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a>Item 1</a></li>
-                                <li>
-                                    <a>Parent</a>
-                                    <ul className="p-2">
-                                        <li><a>Submenu 1</a></li>
-                                        <li><a>Submenu 2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a>Item 3</a></li>
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 z-50">
+                                <li><a>Visi</a></li>
+                                <li><a>Program</a></li>
+                                <li><a>Brosur</a></li>
                             </ul>
                         </div>
-                        <img alt="logo" src="https://baitussalam.sch.id/wp-content/uploads/2021/09/iconwebppmbaitussalam-300x83.png" />
+
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
-                            <li><a>Item 1</a></li>
-                            <li>
-                                <details>
-                                    <summary>Parent</summary>
-                                    <ul className="p-2">
-                                        <li><a>Submenu 1</a></li>
-                                        <li><a>Submenu 2</a></li>
-                                    </ul>
-                                </details>
-                            </li>
-                            <li><a>Item 3</a></li>
+                            <li className="font-semibold text-white"><a>Visi</a></li>
+                            <li className="font-semibold text-white"><a>program</a></li>
+                            <li className="font-semibold text-white"><a>Brosur</a></li>
                         </ul>
-                    </div>
-                    <div className="navbar-end">
-                        <a className="btn">Daftar</a>
                     </div>
                 </div>
             </nav>
 
             {/* slider */}
-            <div>
+            <div className="z-0">
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
@@ -66,6 +65,7 @@ export default function Home() {
                     scrollbar={{ draggable: true }}
                     onSwiper={(swiper) => console.log(swiper)}
                     onSlideChange={() => console.log('slide change')}
+                    className="z-0"
                 >
                     <SwiperSlide>
                         <div className="bg-zoom h-screen bg-no-repeat bg-cover bg-center transition duration-300 delay-300 ease-in-out" style={{ backgroundImage: "url('/asset/gedung.jpg')" }}>
@@ -77,10 +77,14 @@ export default function Home() {
                                 </div>
                                 <div className="flex justify-center mt-4">
                                     <button className="me-3 bg-green-500 py-2 px-4 rounded-md text-white font-semibold shadow-md">
-                                        Daftar
+                                        <a href="https://wa.link/yo3kjz">
+                                            Daftar
+                                        </a>
                                     </button>
                                     <button className="bg-green-700 py-2 px-4 rounded-md text-white font-semibold shadow-md">
-                                        Hubungi kami
+                                        <a href="https://wa.link/yo3kjz">
+                                            Hubungi kami
+                                        </a>
                                     </button>
                                 </div>
                             </div>
@@ -256,21 +260,67 @@ export default function Home() {
             </div>
 
             {/* instagram */}
+            <div className="grid w-full text-center my-10">
+                <h1 className="text-5xl text-green-800">Ikuti Kami Di Instagram</h1>
+            </div>
+            <div className="px-[2em] md:px-[5em] mt-5 flex justify-center">
+                <Swiper
+                    // install Swiper modules
+                    modules={[Navigation, Pagination, A11y, Autoplay]}
+                    slidesPerView={1}
+                    initialSlide={2}
+                    spaceBetween={30}
+                    navigation
+                    pagination={{ clickable: true }}
+                    centeredSlides={true}
+                    roundLengths={true}
+                    loop={true}
+                    grabCursor={true}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 4,
+                            initialSlide: 1,
+                            spaceBetween: 100
+                        }
+                    }
+                    }
+                >
+                    <SwiperSlide >
+                        <InstagramEmbed url="https://www.instagram.com/p/CznZydPJ8Tc/" width={328} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <InstagramEmbed url="https://www.instagram.com/p/CzYmIpkpPL3/" width={328} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <InstagramEmbed url="https://www.instagram.com/p/CvrIFfJJ7A1/" width={328} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <InstagramEmbed url="https://www.instagram.com/p/C0DrasKJCxu/" width={328} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <InstagramEmbed url="https://www.instagram.com/p/C13DgczP9Ga/" width={328} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <InstagramEmbed url="https://www.instagram.com/p/CznaKzRJcwW/" width={328} />
+                    </SwiperSlide>
+                </Swiper>
+            </div>
+
+            {/* brosur pdf */}\
+            <div className="w-full flex flex-col md:px-[5em] items-center justify-center mt-20">
+                <img src="/asset/brosur2.PNG" className="float-left w-[60em] object-cover" alt="brosur1" />
+                <img src="/asset/brosur.PNG" className="float-left w-[60em] object-cover" alt="brosur2" />
+            </div>
 
             {/* footer */}
-            <footer className="footer p-10 bg-neutral text-neutral-content">
+            <footer className="footer p-10 bg-black text-neutral-content">
                 <aside>
-                    <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" className="fill-current"><path d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z"></path></svg>
-                    <p>ACME Industries Ltd.<br />Providing reliable tech since 1992</p>
+                    <p>Pondok Pesantren Daarun Nidzom</p>
                 </aside>
-                <nav>
-                    <header className="footer-title">Social</header>
-                    <div className="grid grid-flow-col gap-4">
-                        <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg></a>
-                        <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></a>
-                        <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></a>
-                    </div>
-                </nav>
             </footer>
         </div>
     )
